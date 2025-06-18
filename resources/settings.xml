@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<settings>
+
+	<category label="Playback">
+		<setting id="playbackMethod" label="Playback Method" type="enum" default="0" values="Auto Play Highest Quality|Auto Play Lowest Quality|Select Quality Via Dialog"/>
+		<setting id="site_language" label="Site Language" type="enum" default="0" values="English|Polish|Arabic|Chinese|Finnish|French|German|Hindi|Indonesian|Japanese|Korean|Portuguese|Russian|Spanish|Turkish|Vietnamese"/>
+	</category>
+
+</settings>

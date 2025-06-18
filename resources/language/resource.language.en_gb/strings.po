@@ -1,0 +1,7 @@
+# Kodi Media Center language file
+# Addon Name: Kick
+# Addon id: plugin.video.kick
+
+msgid ""
+msgstr ""
+

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<addon id="plugin.video.kick" name="Kick" version="1.0.0" provider-name="azzy9">
+	<requires>
+		<import addon="script.module.requests"/>
+		<import addon="script.module.six"/>
+		<import addon="inputstream.adaptive"/>
+	</requires>
+	<extension point="xbmc.python.pluginsource" library="main.py">
+		<provides>video</provides>
+	</extension>
+	<extension point="xbmc.addon.metadata">
+		<description lang="en">Kick</description> 
+		<summary lang="en">Kick</summary>
+		<language>en</language>
+		<platform>all</platform>
+		<assets>
+			<icon>resources/icon.png</icon>
+			<fanart>resources/fanart.jpg</fanart>
+		</assets>
+	</extension>
+</addon>
