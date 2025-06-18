@@ -3,19 +3,12 @@ import sys
 import requests
 
 import ssl
+import json
 
 import xbmc
-import xbmcaddon
 
-from six.moves import urllib_parse
-
-import six
 from six.moves import urllib
-
-try:
-    import json
-except ImportError:
-    import simplejson as json
+from six.moves import urllib_parse
 
 from lib.constants import *
 

@@ -1,11 +1,16 @@
 # -*- coding: UTF-8 -*-
 
-from lib.constants import *
-from lib.general import *
-
 import xbmcgui
 import xbmcplugin
 import xbmc
+
+from six.moves import urllib
+
+from lib.constants import *
+from lib.general import *
+from lib.kick_api import KickAPI
+
+Kick_API = KickAPI()
 
 def add_dir( name, mode='', url='', images={}, info_labels={}, category='', context_menu=None, playable=False, folder=False ):
 
@@ -85,24 +90,12 @@ def home_menu():
 
     xbmcplugin.endOfDirectory(PLUGIN_ID)
 
-def livestream_list( page, category='' ):
+def livestream_list( page, category = '' ):
 
     """ method to retrieve livestreams """
 
-    if page:
-        page = int(page)
-    else:
-        page = 1
-
-    url = BASE_URL + '/stream/livestreams/' + LANG_VAL + \
-        '?limit=' + LIMIT_AMOUNT + '&page=' + str(page)
-
-    if category:
-        url += '&sort=desc&subcategory=' + category
-    else:
-        url += '&sort=featured'
-
-    js_data = request_get(url).json()
+    page = Kick_API.page_int( page )
+    js_data = Kick_API.streams_livestreams( page, category )
     data = js_data.get('data', {})
 
     if data:
@@ -139,14 +132,8 @@ def category_list( page ):
 
     """ method to view a category """
 
-    if page:
-        page = int(page)
-    else:
-        page = 1
-
-    url = BASE_URL + '/api/v1/subcategories?limit=' + LIMIT_AMOUNT + '&page=' + str( page )
-
-    js_data = request_get(url).json()
+    page = Kick_API.page_int( page )
+    js_data = Kick_API.subcategories( page )
     data = js_data.get('data', {})
 
     if data:
@@ -184,12 +171,10 @@ def search_items():
 
     title = urllib.parse.quote_plus( search_str )
 
-    url = BASE_URL + '/api/search?searched_word=' + search_str.replace(' ','+')
-    response = request_get(url).json()
-    xbmc.log( url, xbmc.LOGWARNING )
+    js_data = Kick_API.search( search_str )
 
-    channels = response.get('channels', None)
-    categories = response.get('categories', None)
+    channels = js_data.get('channels', None)
+    categories = js_data.get('categories', None)
 
     if channels:
         for row in channels:
@@ -208,7 +193,7 @@ def search_items():
 
             if row.get('is_live', False):
                 url = '/api/v2/channels/' + channel_slug + '/livestream'
-                add_dir( username, 'play', url, images, info_labels )
+                add_dir( username, 'play', url, images, info_labels, playable=True )
 
     if categories:
         for row in categories:
